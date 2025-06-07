@@ -12,23 +12,8 @@ Features:
 -->
 
 <script lang="ts">
-<<<<<<< HEAD
-	import { publicEnv } from '@root/config/public';
-	import { privateEnv } from '@root/config/private';
-	import type { PageData } from '../$types';
-	// import { dev } from '$app/environment';
-
-	import { roles } from '@src/collections/types';
-
-	// Superforms
-	import { superForm } from 'sveltekit-superforms/client';
-	// import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
-	import { zod } from 'sveltekit-superforms/adapters';
-	import { signUpFormSchema } from '@utils/formSchemas';
-=======
 	import { privateEnv } from '@root/config/private';
 	import { browser } from '$app/environment';
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
 	import type { PageData } from '../$types';
 
@@ -53,10 +38,6 @@ Features:
 	// ParaglideJS
 	import * as m from '@src/paraglide/messages';
 
-<<<<<<< HEAD
-	export let active: undefined | 0 | 1 = undefined;
-	export let FormSchemaSignUp: PageData['signUpForm'];
-=======
 	// Props
 	const {
 		active = $bindable(undefined),
@@ -74,7 +55,6 @@ Features:
 
 	const pageData = page.data as PageData;
 	const firstUserExists = pageData.firstUserExists;
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
 	// State management
 	let tabIndex = $state(1);
@@ -92,10 +72,6 @@ Features:
 	// Form setup with Svelte 5 optimizations
 	const { form, constraints, allErrors, errors, enhance, delayed } = superForm(FormSchemaSignUp, {
 		id: 'signup',
-<<<<<<< HEAD
-		validators: firstUserExists ? zod(signUpFormSchema) : zod(signUpFormSchema.innerType().omit({ token: true })),
-=======
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 		// Clear form on success.
 		resetForm: true,
 		// Prevent page invalidation, which would clear the other form when the load function executes again.

@@ -83,9 +83,6 @@ Install stable [Node.js](https://nodejs.org/en) to get started. Then choose your
 <summary><b>npm</b></summary>
 
 ```bash
-<<<<<<< HEAD
-npm install   # installs all required package dependencies
-=======
 # Install all dependencies
 npm install
 
@@ -100,7 +97,6 @@ npm run build
 
 # Preview production build
 npm run preview
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 ```
 
 </details>
@@ -130,16 +126,8 @@ pnpm run preview
 
 </details>
 
-<<<<<<< HEAD
-The `config/public.ts` contains configuration settings that are safe to share with the public, This includes things like: Site name, Language handling, Media configurations.
-
-### Start the application for development or production
-
-See our `package.json` for more information like development, build, preview, format, lint & testing. Here the most used commands:
-=======
 <details>
 <summary><b>bun</b></summary>
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
 ```bash
 # Install bun if you haven't already

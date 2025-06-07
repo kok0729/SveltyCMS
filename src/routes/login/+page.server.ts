@@ -23,15 +23,10 @@ import type { PageServerLoad } from './$types';
 // Rate Limiter
 import { RateLimiter } from 'sveltekit-rate-limiter/server';
 
-<<<<<<< HEAD
-import { superValidate, message } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
-=======
 // Superforms
 import { superValidate } from 'sveltekit-superforms/server';
 import { valibot } from 'sveltekit-superforms/adapters';
 import { message } from 'sveltekit-superforms/server';
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 import { loginFormSchema, forgotFormSchema, resetFormSchema, signUpFormSchema, signUpOAuthFormSchema } from '@utils/formSchemas';
 
 // Auth
@@ -45,28 +40,12 @@ import type { User } from '@src/auth/types';
 import { get } from 'svelte/store';
 import { systemLanguage, type AvailableLanguageTag } from '@stores/store.svelte';
 
-<<<<<<< HEAD
-	// SignIn
-	const loginForm = await superValidate(event, zod(loginFormSchema));
-	//console.log('loginForm', loginForm); // log loginForm data
-	const forgotForm = await superValidate(event, zod(forgotFormSchema));
-	//console.log('forgotForm', forgotForm); // log forgotForm data
-	const resetForm = await superValidate(event, zod(resetFormSchema));
-	//console.log('resetForm', resetForm); // log resetForm data
-=======
 // Import roles
 import { roles } from '@root/config/roles';
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
 // System Logger
 import { logger } from '@utils/logger.svelte';
 
-<<<<<<< HEAD
-	// SignUp FirstUser
-	const withoutToken = await superValidate(event, zod(signUpFormSchema.innerType().omit({ token: true })));
-	// SignUp Other Users
-	const withToken = await superValidate(event, zod(signUpFormSchema));
-=======
 const limiter = new RateLimiter({
 	IP: [200, 'h'], // 200 requests per hour per IP
 	IPUA: [100, 'm'], // 100 requests per minute per IP+User-Agent
@@ -77,7 +56,6 @@ const limiter = new RateLimiter({
 		preflight: true
 	}
 });
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
 // Password strength configuration
 const MIN_PPASSWORD_LENGTH = publicEnv.PASSWORD_LENGTH || 8;
@@ -369,136 +347,10 @@ export const load: PageServerLoad = async ({ url, cookies, fetch, request, local
 
 // Actions for SignIn and SignUp a user with form data
 export const actions: Actions = {
-<<<<<<< HEAD
-	//Function for handling the SignIn form submission and user authentication
-	signIn: async (event) => {
-		const signInForm = await superValidate(event, zod(loginFormSchema));
-		//console.log('signInForm', signInForm);
-
-		// Validate with Lucia
-		const email = signInForm.data.email.toLocaleLowerCase();
-		const password = signInForm.data.password;
-		const isToken = signInForm.data.isToken;
-
-		const resp = await signIn(email, password, isToken, event.cookies);
-		// console.log('response: ', resp);
-
-		if (resp && resp.status) {
-			// Return message if form is submitted successfully
-			message(signInForm, 'SignIn form submitted');
-			redirect(303, '/');
-		} else {
-			// Handle the case when resp is undefined or when status is false
-			const errorMessage = resp?.message || 'An error occurred during sign-in.';
-			return { form: signInForm, message: errorMessage };
-		}
-	},
-
-	// Function for handling the Forgotten Password
-	forgotPW: async (event) => {
-		const pwforgottenForm = await superValidate(event, zod(forgotFormSchema));
-		//console.log('pwforgottenForm', pwforgottenForm);
-
-		// Validate with Lucia
-		let resp: { status: boolean; message?: string } = { status: false };
-		//console.log('forgotPW Validate', resp);
-		const lang = pwforgottenForm.data.lang;
-		const email = pwforgottenForm.data.email.toLocaleLowerCase();
-		//console.log('forgotPW email', email);
-		const checkMail = await forgotPWCheck(email);
-		//console.log('forgotPW checkMail', checkMail);
-
-		if (email && checkMail.success) {
-			// Email format is valid and email exists in DB
-			// console.log('Email is valid and found in DB');
-			resp = { status: true, message: checkMail.message };
-		} else if (email && !checkMail.success) {
-			// Email format is valid but email doesn't exist in DB
-			// console.log('Email is valid but not found in DB');
-			resp = { status: false, message: checkMail.message };
-		} else if (!email && !checkMail) {
-			// Email format invalid and email doesn't exist in DB
-			// console.log('Email is invalid and not found in DB');
-			resp = { status: false, message: 'Invalid Email' };
-		}
-
-		if (resp.status) {
-			// console.log('resp.status is true');
-
-			// Get the token from the checkMail result
-			const token = checkMail.token;
-			const expiresIn = checkMail.expiresIn;
-
-			// console.log('forgotPW token', token);
-			// console.log('forgotPW expiresIn', expiresIn);
-
-			// send welcome email
-			await event.fetch('/api/sendMail', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					email: email,
-					subject: 'Forgotten Password',
-					message: 'Forgotten Password',
-					templateName: 'forgottenPassword',
-					props: {
-						email: email,
-						token: token,
-						expiresIn: expiresIn,
-						lang: lang
-					}
-				})
-			});
-			// Return message if form is submitted successfully
-			message(pwforgottenForm, 'SignIn Forgotten form submitted');
-			return { form: pwforgottenForm, token: token, email: email };
-		} else {
-			// console.log('resp.status is false');
-			return { form: pwforgottenForm, status: checkMail.success, message: resp.message || 'Unknown error' };
-		}
-	},
-
-	// Function for handling the RESET
-	resetPW: async (event) => {
-		// console.log('resetPW');
-
-		const pwresetForm = await superValidate(event, zod(resetFormSchema));
-		//console.log('pwresetForm', pwresetForm);
-
-		// Validate with Lucia
-		const password = pwresetForm.data.password;
-		const token = pwresetForm.data.token;
-		const email = pwresetForm.data.email;
-		//const lang = pwresetForm.data.lang;
-
-		// Define expiresIn
-		const expiresIn = 2 * 60 * 60; // expiration in 2 hours
-
-		//console.log(token);
-		const resp = await resetPWCheck(password, token, email, expiresIn);
-		// console.log('response: ', resp.status, resp.message);
-
-		if (resp) {
-			// Return message if form is submitted successfully
-			message(pwresetForm, 'SignIn Reset form submitted');
-			redirect(303, '/login');
-		} else {
-			return { form: pwresetForm };
-		}
-	},
-
-	//Function for handling the sign-up form submission and user creation
-	signUp: async (event) => {
-		const signUpForm = await superValidate(event, zod(signUpFormSchema));
-		//console.log('signUpForm', signUpForm);
-=======
 	signUp: async (event) => {
 		if (await limiter.isLimited(event)) {
 			return fail(429, { message: 'Too many requests. Please try again later.' });
 		}
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
 		// Ensure database initialization is complete
 		await dbInitPromise;
@@ -642,14 +494,6 @@ export const actions: Actions = {
 		throw redirect(303, authUrl);
 	},
 
-<<<<<<< HEAD
-		const signUpOAuthForm = await superValidate(event, zod(signUpOAuthFormSchema));
-		// const username = signUpOAuthForm.data.username;
-		// const token = signUpOAuthForm.data.token;
-		const lang = signUpOAuthForm.data.lang;
-		const [url, state] = await googleAuth.getAuthorizationUrl();
-		// url.searchParams.set('lang', );
-=======
 	signIn: async (event) => {
 		if (await limiter.isLimited(event)) {
 			return fail(429, { message: 'Too many requests. Please try again later.' });
@@ -660,7 +504,6 @@ export const actions: Actions = {
 			logger.error('Authentication system is not ready for signIn action');
 			return fail(503, { form: await superValidate(event, wrappedLoginSchema), message: 'Authentication system is not ready.' });
 		}
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
 		const signInForm = await superValidate(event, wrappedLoginSchema);
 		if (!signInForm.valid) return fail(400, { form: signInForm });

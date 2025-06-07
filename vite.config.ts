@@ -14,18 +14,9 @@ import { readFileSync, existsSync } from 'fs';
 import { execSync } from 'child_process';
 import { purgeCss } from 'vite-plugin-tailwind-purgecss';
 import { sveltekit } from '@sveltejs/kit/vite';
-<<<<<<< HEAD
-import { paraglide } from '@inlang/paraglide-js-adapter-vite';
-
-// Gets package.json version info on app start
-// https://kit.svelte.dev/faq#read-package-json
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-=======
 import { defineConfig } from 'vite';
 import { paraglide } from '@inlang/paraglide-sveltekit/vite';
 import svelteEmailTailwind from 'svelte-email-tailwind/vite';
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 import { compile } from './src/routes/api/compile/compile';
 import { generateContentTypes } from './src/content/vite';
 import type { IncomingMessage, ServerResponse } from 'http';
@@ -85,33 +76,10 @@ export default defineConfig(async () => {
     process.exit(1);
   }
 
-<<<<<<< HEAD
-const config = {
-	plugins: [
-		{
-			name: 'vite:server',
-			config() {
-				return {
-					define: {
-						'import.meta.env.collectionsFolderJS': JSON.stringify(collectionsFolderJS),
-						'import.meta.env.collectionsFolderTS': JSON.stringify(collectionsFolderTS)
-					}
-				};
-			}
-		},
-		sveltekit(),
-		purgeCss(),
-		paraglide({
-			project: './project.inlang', // Path to your inlang project
-			outdir: './src/paraglide' // Where you want the generated files to be placed
-		})
-	],
-=======
   // If validation passes, start the app
   const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
   const userCollections = Path.posix.join(process.cwd(), 'config/collections');
   const compiledCollections = Path.posix.join(process.cwd(), 'compiledCollections');
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
   let compileTimeout: NodeJS.Timeout;
   // Helper function for non-blocking validation during development
@@ -125,12 +93,6 @@ const config = {
     }
   }
 
-<<<<<<< HEAD
-	define: {
-		SUPERFORMS_LEGACY: true,
-		__VERSION__: JSON.stringify(pkg.version)
-	},
-=======
   return {
     plugins: [
       sveltekit(),
@@ -148,7 +110,6 @@ const config = {
         configureServer(server) {
           let lastUnlinkFile: string | null = null;
           let lastUnlinkTime = 0;
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
           return () => {
             server.watcher.on('all', async (event, file) => {

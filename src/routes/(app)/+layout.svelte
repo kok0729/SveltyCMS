@@ -227,11 +227,7 @@
 				{/if}
 
 				<!-- Content Area -->
-<<<<<<< HEAD
-				<main class="realative w-full flex-1 overflow-hidden">
-=======
 				<main class="relative w-full flex-1">
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 					<!-- Page Header -->
 					{#if uiStateManager.uiState.value.pageheader !== 'hidden'}
 						<header class="sticky top-0 z-10 w-full">

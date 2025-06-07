@@ -203,12 +203,7 @@ It provides a user-friendly interface for searching, filtering, and navigating t
 				throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
 			}
 
-<<<<<<< HEAD
-			// Load All available Users
-			responseData = data.props.data;
-=======
 			const result = await response.json();
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
 			if (result.success) {
 				folders = await fetchUpdatedFolders();

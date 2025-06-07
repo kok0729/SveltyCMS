@@ -37,23 +37,11 @@
 	import * as m from '@src/paraglide/messages';
 
 	// Skeleton
-<<<<<<< HEAD
-	import { TabGroup, Tab, CodeBlock, clipboard, getToastStore } from '@skeletonlabs/skeleton';
-	$: $tabSet = 0;
-
-	const toastStore = getToastStore();
-
-	export let fields: typeof $collection.fields | undefined = undefined;
-	export let root = true; // if Fields is not part of any widget.
-	export let fieldsData = {};
-	export let customData = {};
-=======
 	import { TabGroup, Tab, CodeBlock, clipboard } from '@skeletonlabs/skeleton';
 
 	// Components
 	import { widgetFunctions } from '@src/widgets';
 	import Loading from '@components/Loading.svelte';
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
 	// Props
 	interface Props {
@@ -115,17 +103,6 @@
 	function handleRevert() {
 		// Implement revert logic
 		console.warn('Revert function not implemented');
-	}
-
-	function handleCopyUrl() {
-		navigator.clipboard.writeText(apiUrl).then(() => {
-			toastStore.trigger({
-				message: '<iconify-icon icon="ph:copy" color="white" width="24" class="mr-1"></iconify-icon> Copied to clipboard.',
-				background: 'gradient-primary',
-				timeout: 3000,
-				classes: 'border-1 !rounded-md'
-			});
-		});
 	}
 
 	function getTabHeaderVisibility() {
@@ -277,68 +254,11 @@
 						{/each}
 					</div>
 				</div>
-<<<<<<< HEAD
-			</div>
-		{:else if $tabSet === 1}
-			<!-- Revision -->
-			<div class="mb-2 flex items-center justify-between gap-2">
-				<p class="text-center text-tertiary-500 dark:text-primary-500">{m.fields_revision_compare()}</p>
-				<button class="variant-outline-tertiary btn dark:variant-ghost-primary" on:click={handleRevert}>{m.fields_revision_revert()}</button>
-			</div>
-			<!-- dropdown -->
-			<select class="select mb-2">
-				<option value="1">{m.fields_revision_most_recent()}</option>
-				<option value="2">February 19th 2024, 4:00 PM</option>
-			</select>
-
-			<div class="flex justify-between dark:text-white">
-				<!-- Current version -->
-				<div class="text-center">
-					<p class="mb-4 sm:mb-0">{m.fields_revision_current_version()}</p>
-					<CodeBlock
-						color="text-white dark:text-primary-500"
-						language="JSON"
-						rounded="rounded-container-token"
-						lineNumbers={true}
-						text="text-xs text-left w-full"
-						buttonLabel=""
-						code={JSON.stringify($entryData, null, 2)}
-					/>
-				</div>
-				<div
-					class=" min-h-[1em] w-px self-stretch bg-gradient-to-tr from-transparent via-neutral-500 to-transparent opacity-20 dark:opacity-100"
-				></div>
-				<!-- Revision version -->
-				<div class="ml-2 text-left">
-					<p class="text-center text-tertiary-500">February 19th 2024, 4:00 PM</p>
-					<!-- <HighlightedText text={JSON.stringify($entryData, null, 2)} term="bg-red-100" /> -->
-					<CodeBlock
-						color="text-white dark:text-primary-500"
-						language="JSON"
-						lineNumbers={true}
-						text="text-xs text-left text-white dark:text-tertiary-500"
-						buttonLabel=""
-						code={JSON.stringify($entryData, null, 2)}
-					/>
-				</div>
-			</div>
-		{:else if $tabSet === 2}
-			<!-- API Json -->
-			{#if $entryData == null}
-				<div class="variant-ghost-error mb-4 py-2 text-center font-bold">{m.fields_api_nodata()}</div>
-			{:else}
-				<div class="wrapper mb-4 flex w-full items-center justify-start gap-1">
-					<!-- label -->
-					<p class="flex items-center">
-						<span class="mr-1">API URL:</span>
-						<iconify-icon icon="ph:copy" on:click={handleCopyUrl} class="pb- cursor-pointer text-tertiary-500 dark:text-primary-500" />
-=======
 			{:else if tabSet === 1}
 				<!-- Revision tab content -->
 				<div class="mb-2 flex items-center justify-between gap-2">
 					<p class="text-center text-tertiary-500 dark:text-primary-500">
 						{m.fields_revision_compare()}
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 					</p>
 					<button class="variant-outline-tertiary btn dark:variant-ghost-primary" onclick={handleRevert}>{m.fields_revision_revert()}</button>
 				</div>

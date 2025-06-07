@@ -21,15 +21,8 @@ Features:
 
 	// Superforms
 	import { superForm } from 'sveltekit-superforms/client';
-<<<<<<< HEAD
-	// import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
-	import { zod } from 'sveltekit-superforms/adapters';
-
-	import { loginFormSchema, forgotFormSchema, resetFormSchema } from '@utils/formSchemas';
-=======
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import type { LoginFormSchema, ForgotFormSchema, ResetFormSchema } from '@utils/formSchemas';
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 
 	// Components
 	import SiteName from '@components/SiteName.svelte';
@@ -88,19 +81,11 @@ Features:
 	// Login form setup
 	const { form, constraints, allErrors, errors, enhance, delayed } = superForm(FormSchemaLogin, {
 		id: 'login',
-<<<<<<< HEAD
-		validators: zod(loginFormSchema),
-=======
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 		// Clear form on success.
 		resetForm: true,
 		// Prevent page invalidation, which would clear the other form when the load function executes again.
 		invalidateAll: false,
 		// other options
-<<<<<<< HEAD
-
-=======
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 		applyAction: true,
 		taintedMessage: '',
 		multipleSubmits: 'prevent',
@@ -163,17 +148,8 @@ Features:
 		delayed: forgotDelayed
 	} = superForm(FormSchemaForgot, {
 		id: 'forgot',
-<<<<<<< HEAD
-		validators: zod(forgotFormSchema),
-		// Clear form on success.
-=======
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 		resetForm: true,
 		invalidateAll: false,
-<<<<<<< HEAD
-		// other options
-=======
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 		applyAction: true,
 		taintedMessage: '',
 		multipleSubmits: 'prevent',
@@ -284,17 +260,8 @@ Features:
 		delayed: resetDelayed
 	} = superForm(FormSchemaReset, {
 		id: 'reset',
-<<<<<<< HEAD
-		validators: zod(resetFormSchema),
-		// Clear form on success.
-=======
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 		resetForm: true,
 		invalidateAll: false,
-<<<<<<< HEAD
-		// other options
-=======
->>>>>>> 69c53df49f438e29d4d10f3501b2b2667cbfa787
 		applyAction: true,
 		taintedMessage: '',
 		multipleSubmits: 'prevent',
